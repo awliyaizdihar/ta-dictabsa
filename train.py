@@ -14,7 +14,7 @@ import numpy
 
 from sklearn import metrics
 import datetime
-from transformers import BertModel
+from transformers import BertModel, AutoModel
 
 import torch
 import torch.nn as nn
@@ -32,7 +32,7 @@ class Instructor:
         if 'bert' in opt.model_name:
             print('加载Bert...')
             tokenizer = Tokenizer4Bert(opt.max_seq_len, opt.pretrained_bert_name)
-            bert = BertModel.from_pretrained(opt.pretrained_bert_name)
+            bert = AutoModel.from_pretrained(opt.pretrained_bert_name, return_dict=False)
             print('Bert加载完毕.')
             self.model = opt.model_class(bert, opt).to(opt.device)
         else:
@@ -75,7 +75,7 @@ class Instructor:
 
     def _reset_params(self):
         for child in self.model.children():
-            if type(child) != BertModel:  # skip bert params
+            if type(child) != AutoModel:  # skip bert params
                 for p in child.parameters():
                     if p.requires_grad:
                         if len(p.shape) > 1:
@@ -160,8 +160,8 @@ class Instructor:
 
         acc = n_correct / n_total
         x, y = t_targets_all.cpu(), torch.argmax(t_outputs_all, -1).cpu()
-        precision, recall, f1_score, = metrics.precision_score(x, y, labels=[0, 1, 2], average='micro'),\
-        metrics.recall_score(x, y, labels=[0, 1, 2], average='micro'),metrics.f1_score(x, y, labels=[0, 1, 2], average='micro')
+        precision, recall, f1_score, = metrics.precision_score(x, y, labels=[0, 1, 2], average='macro'),\
+        metrics.recall_score(x, y, labels=[0, 1, 2], average='macro'),metrics.f1_score(x, y, labels=[0, 1, 2], average='macro')
         return acc, precision, recall, f1_score
 
     def run(self):
@@ -188,10 +188,14 @@ def main():
     parser.add_argument('--model_name', default='lstm', type=str, choices=['lstm','td_lstm','tc_lstm','atae_lstm'
         ,'ian','memnet','ram','cabasc','tnet_lf','aoa,mgan','bert_spc','aen_bert','lcf_bert'], help=
     'choose model from lstm,td_lstm,tc_lstm,atae_lstm,ian,memnet,ram,cabasc,tnet_lf,aoa,mgan,bert_spc,aen_bert,lcf_bert')
-    parser.add_argument('--dataset', default='twitter', choices=['twitter', 'acl14shortdata', 'SemEval2014',
+    parser.add_argument('--dataset', default='ulasan_ori', choices=['twitter', 'acl14shortdata', 'SemEval2014',
                                                                  'SemEval2015', 'SemEval2016', 'twitter_know',
                                                                  'acl14shortdata_know', 'SemEval2014_know',
-                                                                 'SemEval2015_know', 'SemEval2016_know'], type=str,
+                                                                 'SemEval2015_know', 'SemEval2016_know',
+                                                                 'ulasan_ori', 'ulasan_raw_know',
+                                                                 'ulasan_trim_know', 'ulasan_select_know',
+                                                                 'padanan_ori', 'padanan_know',
+                                                                 'padanan_trim_know', 'padanan_select_know'], type=str,
                         help='choose from twitter, acl14shortdata, SemEval2014, SemEval2015, SemEval2016 |||_know')
     parser.add_argument('--optimizer', default='adam', type=str)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
@@ -290,6 +294,38 @@ def main():
         'twitter_know': {
             'train': './datasets/twitter/output_know/train.tsv',
             'test': './datasets/twitter/output_know/dev.tsv'
+        },
+        'ulasan_ori': {
+            'train': './datasets/ulasan_ori/train.tsv',
+            'test': './datasets/ulasan_ori/dev.tsv'
+        },
+        'ulasan_raw_know': {
+            'train': './datasets/ulasan_ori/a_raw_knowledge/train.tsv',
+            'test': './datasets/ulasan_ori/a_raw_knowledge/dev.tsv'
+        },
+        'ulasan_trim_know': {
+            'train': './datasets/ulasan_ori/c_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_ori/c_trimmed_knowledge/dev.tsv'
+        },
+        'ulasan_select_know': {
+            'train': './datasets/ulasan_ori/d_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_ori/d_selected_knowledge/dev.tsv'
+        },
+        'padanan_ori': {
+            'train': './datasets/ulasan_padanan/train.tsv',
+            'test': './datasets/ulasan_padanan/dev.tsv'
+        },
+        'padanan_know': {
+            'train': './datasets/ulasan_padanan/b_padanan_knowledge/train.tsv',
+            'test': './datasets/ulasan_padanan/b_padanan_knowledge/dev.tsv'
+        },
+        'padanan_trim_know': {
+            'train': './datasets/ulasan_padanan/c_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_padanan/c_trimmed_knowledge/dev.tsv'
+        },
+        'padanan_select_know': {
+            'train': './datasets/ulasan_padanan/d_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_padanan/d_selected_knowledge/dev.tsv'
         }
     }
     input_colses = {
