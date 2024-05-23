@@ -215,18 +215,18 @@ if __name__ == '__main__':
     }
     class Option(object): pass
     opt = Option()
-    # opt.model_name = 'bert_spc'
+    opt.model_name = 'bert_spc'
     opt.model_class = model_classes[opt.model_name]
-    # opt.dataset = 'ulasan_ori'
+    opt.dataset = 'ulasan_ori'
     opt.dataset_file = dataset_files[opt.dataset]
     opt.inputs_cols = input_colses[opt.model_name]
     # set your trained models here
-    # opt.state_dict_path = 'state_dict/ian_restaurant_acc0.7911'
+    opt.state_dict_path = 'state_dict/bert_spc_ulasan_ori_val_f1_0.7176'
     opt.embed_dim = 300
     opt.hidden_dim = 300
     opt.max_seq_len = 125
     opt.bert_dim = 768
-    # opt.pretrained_bert_name = 'bert-base-uncased'
+    opt.pretrained_bert_name = 'indobenchmark/indobert-base-p1'
     opt.polarities_dim = 3
     opt.hops = 3
     opt.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -235,6 +235,6 @@ if __name__ == '__main__':
     opt.dropout = 0.1
 
     inf = Inferer(opt)
-    # t_probs = inf.evaluate('the service is terrible', 'service')
-    t_probs = inf.evaluate(opt.kalimat, opt.aspek)
+    t_probs = inf.evaluate('tempat yang sangat cocok untuk liburan keluarga', 'liburan')
+    # t_probs = inf.evaluate(opt.kalimat, opt.aspek)
     print(t_probs.argmax(axis=-1) - 1)
