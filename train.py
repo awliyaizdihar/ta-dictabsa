@@ -160,8 +160,8 @@ class Instructor:
 
         acc = n_correct / n_total
         x, y = t_targets_all.cpu(), torch.argmax(t_outputs_all, -1).cpu()
-        precision, recall, f1_score, = metrics.precision_score(x, y, labels=[0, 1, 2], average='weighted'),\
-        metrics.recall_score(x, y, labels=[0, 1, 2], average='weighted'),metrics.f1_score(x, y, labels=[0, 1, 2], average='weighted')
+        precision, recall, f1_score, = metrics.precision_score(x, y, labels=[0, 1, 2], average='macro'),\
+        metrics.recall_score(x, y, labels=[0, 1, 2], average='macro'),metrics.f1_score(x, y, labels=[0, 1, 2], average='macro')
         return acc, precision, recall, f1_score
 
     def run(self):
