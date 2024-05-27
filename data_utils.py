@@ -8,7 +8,7 @@ import pickle
 import numpy as np
 import torch
 from torch.utils.data import Dataset
-from transformers import BertTokenizer
+from transformers import BertTokenizer, AutoTokenizer
 
 
 def _load_word_vec(path, word2idx=None, embed_dim=300):

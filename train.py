@@ -195,7 +195,10 @@ def main():
                                                                  'ulasan_ori', 'ulasan_raw_know',
                                                                  'ulasan_trim_know', 'ulasan_select_know',
                                                                  'padanan_ori', 'padanan_know',
-                                                                 'padanan_trim_know', 'padanan_select_know'], type=str,
+                                                                 'padanan_trim_know', 'padanan_select_know',
+                                                                 'combined_ori', 'combined_raw_know',
+                                                                 'combined_padanan_know', 'combined_padanan_trim',
+                                                                 'combined_padanan_select'], type=str,
                         help='choose from twitter, acl14shortdata, SemEval2014, SemEval2015, SemEval2016 |||_know')
     parser.add_argument('--optimizer', default='adam', type=str)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
@@ -326,6 +329,26 @@ def main():
         'padanan_select_know': {
             'train': './datasets/ulasan_padanan/d_selected_knowledge/train.tsv',
             'test': './datasets/ulasan_padanan/d_selected_knowledge/dev.tsv'
+        },
+        'combined_ori': {
+            'train': './datasets/ulasan_combined/train.tsv',
+            'test': './datasets/ulasan_combined/dev.tsv'
+        },
+        'combined_raw_know': {
+            'train': './datasets/ulasan_combined/a_raw_know/train.tsv',
+            'test': './datasets/ulasan_combined/a_raw_know/dev.tsv'
+        },
+        'combined_padanan_know': {
+            'train': './datasets/ulasan_combined/b_padanan_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/b_padanan_knowledge/dev.tsv'
+        },
+        'combined_padanan_trim': {
+            'train': './datasets/ulasan_combined/c_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/c_trimmed_knowledge/dev.tsv'
+        },
+        'combined_padanan_select': {
+            'train': './datasets/ulasan_combined/d_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/d_selected_knowledge/dev.tsv'
         }
     }
     input_colses = {
