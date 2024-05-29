@@ -191,7 +191,10 @@ def main():
     parser.add_argument('--dataset', default='twitter', choices=['twitter', 'acl14shortdata', 'SemEval2014',
                                                                  'SemEval2015', 'SemEval2016', 'twitter_know',
                                                                  'acl14shortdata_know', 'SemEval2014_know',
-                                                                 'SemEval2015_know', 'SemEval2016_know'], type=str,
+                                                                 'SemEval2015_know', 'SemEval2016_know',
+                                                                 'ulasan_ori', 'ulasan_raw_know',
+                                                                 'ulasan_select_know', 'combined_ori',
+                                                                 'combined_raw_know', 'combined_select_know'], type=str,
                         help='choose from twitter, acl14shortdata, SemEval2014, SemEval2015, SemEval2016 |||_know')
     parser.add_argument('--optimizer', default='adam', type=str)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
@@ -290,6 +293,30 @@ def main():
         'twitter_know': {
             'train': './datasets/twitter/output_know_insert/train.tsv',
             'test': './datasets/twitter/output_know_insert/dev.tsv'
+        },
+        'ulasan_ori': {
+            'train': './datasets/ulasan_ori/train.tsv',
+            'test': './datasets/ulasan_ori/dev.tsv'
+        },
+        'ulasan_raw_know': {
+            'train': './datasets/ulasan_ori/x_insert_raw_knowledge/train.tsv',
+            'test': './datasets/ulasan_ori/x_insert_raw_knowledge/dev.tsv'
+        },
+        'ulasan_select_know': {
+            'train': './datasets/ulasan_ori/z_insert_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_ori/z_insert_selected_knowledge/dev.tsv'
+        },
+        'combined_ori': {
+            'train': './datasets/ulasan_combined/train.tsv',
+            'test': './datasets/ulasan_combined/dev.tsv'
+        },
+        'combined_raw_know': {
+            'train': './datasets/ulasan_combined/x_insert_raw_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/x_insert_raw_knowledge/dev.tsv'
+        },
+        'combined_select_know': {
+            'train': './datasets/ulasan_combined/z_insert_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/z_insert_selected_knowledge/dev.tsv'
         }
     }
     input_colses = {
