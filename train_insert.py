@@ -14,7 +14,7 @@ import numpy
 
 from sklearn import metrics
 import datetime
-from transformers import BertModel
+from transformers import BertModel, AutoModel
 
 import torch
 import torch.nn as nn
@@ -32,7 +32,7 @@ class Instructor:
         if 'bert' in opt.model_name:
             print('加载Bert...')
             tokenizer = Tokenizer4Bert(opt.max_seq_len, opt.pretrained_bert_name)
-            bert = BertModel.from_pretrained(opt.pretrained_bert_name)
+            bert = AutoModel.from_pretrained(opt.pretrained_bert_name, return_dict=False)
             print('Bert加载完毕.')
             self.model = opt.model_class(bert, opt).to(opt.device)
         else:
