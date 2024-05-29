@@ -198,7 +198,7 @@ def main():
                                                                  'padanan_trim_know', 'padanan_select_know',
                                                                  'combined_ori', 'combined_raw_know',
                                                                  'combined_padanan_know', 'combined_padanan_trim',
-                                                                 'combined_padanan_select'], type=str,
+                                                                 'combined_padanan_select', 'combined_select_know'], type=str,
                         help='choose from twitter, acl14shortdata, SemEval2014, SemEval2015, SemEval2016 |||_know')
     parser.add_argument('--optimizer', default='adam', type=str)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
@@ -349,6 +349,10 @@ def main():
         'combined_padanan_select': {
             'train': './datasets/ulasan_combined/d_selected_knowledge/train.tsv',
             'test': './datasets/ulasan_combined/d_selected_knowledge/dev.tsv'
+        },
+        'combined_select_know': {
+            'train': './datasets/ulasan_combined/e_raw_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/e_raw_selected_knowledge/dev.tsv'
         }
     }
     input_colses = {
