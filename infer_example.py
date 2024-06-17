@@ -253,18 +253,5 @@ if __name__ == '__main__':
     opt.dropout = 0.1
 
     inf = Inferer(opt)
-
     t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
-    print(t_probs.argmax(axis=-1) - 1)
-
-    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pandangan')
-    print(t_probs.argmax(axis=-1) - 1)
-
-    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'topi')
-    print(t_probs.argmax(axis=-1) - 1)
-
-    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'ponsel')
-    print(t_probs.argmax(axis=-1) - 1)
-
-    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'kaca mata')
     print(t_probs.argmax(axis=-1) - 1)
