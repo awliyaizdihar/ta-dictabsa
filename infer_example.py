@@ -254,10 +254,11 @@ if __name__ == '__main__':
 
     import pandas as pd
     test_infer = pd.read_csv('./datasets/test/test.tsv', sep='\t', usecols=['review', 'aspect'])
-    list_review = test_infer['review'].values.tolist()
-    list_aspect = test_infer['aspect'].values.tolist()
 
     inf = Inferer(opt)
     # t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
-    t_probs = inf.evaluate(list_review, list_aspect)
+    # t_probs = inf.evaluate(list_review, list_aspect)
+    t_probs = test_infer.apply(lambda x: inf.evaluate(x['review'], x['aspect']), axis=1)
     print(t_probs.argmax(axis=-1) - 1)
+    print('x')
+    print(t_probs)
