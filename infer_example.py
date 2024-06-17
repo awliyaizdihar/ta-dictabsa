@@ -90,7 +90,6 @@ class Inferer:
 
         return t_probs
 
-
 if __name__ == '__main__':
     model_classes = {
         'lstm': LSTM,
