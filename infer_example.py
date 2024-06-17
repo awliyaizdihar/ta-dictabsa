@@ -91,48 +91,6 @@ class Inferer:
 
 
 if __name__ == '__main__':
-    # Hyper Parameters
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', default='lstm', type=str, choices=['lstm','td_lstm','tc_lstm','atae_lstm'
-        ,'ian','memnet','ram','cabasc','tnet_lf','aoa,mgan','bert_spc','aen_bert','lcf_bert'], help=
-    'choose model from lstm,td_lstm,tc_lstm,atae_lstm,ian,memnet,ram,cabasc,tnet_lf,aoa,mgan,bert_spc,aen_bert,lcf_bert')
-    parser.add_argument('--dataset', default='ulasan_ori', choices=['twitter', 'acl14shortdata', 'SemEval2014',
-                                                                 'SemEval2015', 'SemEval2016', 'twitter_know',
-                                                                 'acl14shortdata_know', 'SemEval2014_know',
-                                                                 'SemEval2015_know', 'SemEval2016_know',
-                                                                 'ulasan_ori', 'ulasan_raw_know',
-                                                                 'ulasan_trim_know', 'ulasan_select_know',
-                                                                 'padanan_ori', 'padanan_know',
-                                                                 'padanan_trim_know', 'padanan_select_know'], type=str,
-                        help='choose from twitter, acl14shortdata, SemEval2014, SemEval2015, SemEval2016 |||_know')
-    parser.add_argument('--state_dict_path', default='state_dict/bert_spc_ulasan_ori_know_val_f1_0.6543', type=str)
-    parser.add_argument('--kalimat', default='permainan di taman air sangat bervariasi, mulai dari yang santai hingga ekstrim. tempat yang sangat cocok untuk liburan keluarga', type=str)
-    parser.add_argument('--aspek', default='liburan', type=str)
-    parser.add_argument('--optimizer', default='adam', type=str)
-    parser.add_argument('--initializer', default='xavier_uniform_', type=str)
-    parser.add_argument('--lr', default=2e-5, type=float, help='try 5e-5, 2e-5 for BERT, 1e-3 for others')
-    parser.add_argument('--dropout', default=0.1, type=float)
-    parser.add_argument('--l2reg', default=0.01, type=float)
-    parser.add_argument('--num_epoch', default=100, type=int, help='try larger number for non-BERT models')
-    parser.add_argument('--batch_size', default=16, type=int, help='try 16, 32, 64 for BERT models')
-    parser.add_argument('--log_step', default=100, type=int)
-    parser.add_argument('--embed_dim', default=300, type=int)
-    parser.add_argument('--hidden_dim', default=300, type=int)
-    parser.add_argument('--bert_dim', default=768, type=int)
-    parser.add_argument('--pretrained_bert_name', default='bert-base-uncased', type=str)
-    parser.add_argument('--max_seq_len', default=125, type=int)
-    parser.add_argument('--polarities_dim', default=3, type=int)
-    parser.add_argument('--hops', default=3, type=int)
-    parser.add_argument('--patience', default=20, type=int)
-    parser.add_argument('--device', default=None, type=str, help='e.g. cuda:0')
-    parser.add_argument('--seed', default=1234, type=int, help='set seed for reproducibility')
-    parser.add_argument('--valset_ratio', default=0, type=float,
-                        help='set ratio between 0 and 1 for validation support')
-    # The following parameters are only valid for the lcf-bert model
-    parser.add_argument('--local_context_focus', default='cdm', type=str, help='local context focus mode, cdw or cdm')
-    parser.add_argument('--SRD', default=3, type=int,
-                        help='semantic-relative-distance, see the paper of LCF-BERT model')
-
     model_classes = {
         'lstm': LSTM,
         'td_lstm': TD_LSTM,
@@ -194,6 +152,66 @@ if __name__ == '__main__':
         'padanan_select_know': {
             'train': './datasets/ulasan_padanan/d_selected_knowledge/train.tsv',
             'test': './datasets/ulasan_padanan/d_selected_knowledge/dev.tsv'
+        },
+        'combined_ori': {
+            'train': './datasets/ulasan_combined/train.tsv',
+            'test': './datasets/ulasan_combined/dev.tsv'
+        },
+        'combined_raw_know': {
+            'train': './datasets/ulasan_combined/a_raw_know/train.tsv',
+            'test': './datasets/ulasan_combined/a_raw_know/dev.tsv'
+        },
+        'combined_padanan_know': {
+            'train': './datasets/ulasan_combined/b_padanan_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/b_padanan_knowledge/dev.tsv'
+        },
+        'combined_padanan_trim': {
+            'train': './datasets/ulasan_combined/c_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/c_trimmed_knowledge/dev.tsv'
+        },
+        'combined_padanan_select': {
+            'train': './datasets/ulasan_combined/d_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/d_selected_knowledge/dev.tsv'
+        },
+        'combined_select_know': {
+            'train': './datasets/ulasan_combined/e_raw_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/e_raw_selected_knowledge/dev.tsv'
+        },
+        'combined_trim_know': {
+            'train': './datasets/ulasan_combined/f_raw_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/f_raw_trimmed_knowledge/dev.tsv'
+        },
+        'combined_trim_select_up': {
+            'train': './datasets/ulasan_combined/g_trimmed_selected_up_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/g_trimmed_selected_up_knowledge/dev.tsv'
+        },
+        'insert_raw_know': {
+            'train': './datasets/ulasan_combined/x_insert_raw_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/x_insert_raw_knowledge/dev.tsv'
+        },
+        'insert_trim_know': {
+            'train': './datasets/ulasan_combined/y_insert_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/y_insert_trimmed_knowledge/dev.tsv'
+        },
+        'insert_select_know': {
+            'train': './datasets/ulasan_combined/z_insert_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/z_insert_selected_knowledge/dev.tsv'
+        },
+        'insert_padanan_know': {
+            'train': './datasets/ulasan_combined/j_insert_padanan_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/j_insert_padanan_knowledge/dev.tsv'
+        },
+        'insert_padanan_trim': {
+            'train': './datasets/ulasan_combined/k_insert_padanan_trimmed_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/k_insert_padanan_trimmed_knowledge/dev.tsv'
+        },
+        'insert_padanan_select': {
+            'train': './datasets/ulasan_combined/l_insert_padanan_selected_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/l_insert_padanan_selected_knowledge/dev.tsv'
+        },
+        'insert_trim_select_up': {
+            'train': './datasets/ulasan_combined/m_insert_trim_select_up_knowledge/train.tsv',
+            'test': './datasets/ulasan_combined/m_insert_trim_select_up_knowledge/dev.tsv'
         }
     }
     input_colses = {
@@ -235,6 +253,18 @@ if __name__ == '__main__':
     opt.dropout = 0.1
 
     inf = Inferer(opt)
-    t_probs = inf.evaluate('tempat yang sangat cocok untuk liburan keluarga', 'liburan')
-    # t_probs = inf.evaluate(opt.kalimat, opt.aspek)
+
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
+    print(t_probs.argmax(axis=-1) - 1)
+
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pandangan')
+    print(t_probs.argmax(axis=-1) - 1)
+
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'topi')
+    print(t_probs.argmax(axis=-1) - 1)
+
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'ponsel')
+    print(t_probs.argmax(axis=-1) - 1)
+
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'kaca mata')
     print(t_probs.argmax(axis=-1) - 1)
