@@ -254,11 +254,12 @@ if __name__ == '__main__':
 
     import pandas as pd
     test_infer = pd.read_csv('./datasets/test/test.tsv', sep='\t', usecols=['review', 'aspect'])
-    pd.set_option('display.max_colwidth', None)
+    
     inf = Inferer(opt)
     # t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
     # t_probs = inf.evaluate(list_review, list_aspect)
     t_probs = test_infer.apply(lambda x: inf.evaluate(x['review'], x['aspect']), axis=1)
     # print(t_probs.argmax(axis=-1) - 1)
     print('x')
-    print(t_probs)
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        print(t_probs)
