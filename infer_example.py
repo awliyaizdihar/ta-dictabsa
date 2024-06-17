@@ -4,6 +4,7 @@
 # fixed: yangheng <yangheng@m.scnu.edu.cn>
 # Copyright (C) 2019. All Rights Reserved.
 
+from curses import has_il
 import torch
 import torch.nn.functional as F
 import argparse
@@ -256,9 +257,11 @@ if __name__ == '__main__':
     test_infer = pd.read_csv('./datasets/test/test.tsv', sep='\t', usecols=['review', 'aspect'])
 
     inf = Inferer(opt)
-    # t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
     # t_probs = inf.evaluate(list_review, list_aspect)
-    t_probs = test_infer.apply(lambda x: inf.evaluate(x['review'], x['aspect']), axis=1)
+    # t_probs = test_infer.apply(lambda x: inf.evaluate(x['review'], x['aspect']), axis=1)
     print(t_probs.argmax(axis=-1) - 1)
     print('x')
+    global hasil
+    hasil = t_probs
     print(t_probs)
