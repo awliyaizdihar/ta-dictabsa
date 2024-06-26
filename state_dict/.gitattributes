@@ -9,3 +9,4 @@
 *.7783 filter=lfs diff=lfs merge=lfs -text
 *.7504 filter=lfs diff=lfs merge=lfs -text
 *.7602 filter=lfs diff=lfs merge=lfs -text
+*.6831 filter=lfs diff=lfs merge=lfs -text
