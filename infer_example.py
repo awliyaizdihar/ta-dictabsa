@@ -252,13 +252,13 @@ if __name__ == '__main__':
     opt.SRD = 3
     opt.dropout = 0.1
 
-    import pandas as pd
-    test_infer = pd.read_csv('./datasets/test/test.tsv', sep='\t', usecols=['review', 'aspect'])
+    # import pandas as pd
+    # test_infer = pd.read_csv('./datasets/test/test.tsv', sep='\t', usecols=['review', 'aspect'])
     
     inf = Inferer(opt)
-    # t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
-    t_probs = test_infer.apply(lambda x: inf.evaluate(x['review'], x['aspect']), axis=1)
-    # print(t_probs.argmax(axis=-1) - 1)
+    t_probs = inf.evaluate('pura ini dibangun diatas tebing terjal. pandangan yang sangat indah. di kawasan pura ini banyak monyet yang siap merampok topi, ponsel dan kaca mata anda. hatihatilah dengan mereka.', 'pura')
+    # t_probs = test_infer.apply(lambda x: inf.evaluate(x['review'], x['aspect']), axis=1)
+    print(t_probs.argmax(axis=-1) - 1)
     # print('x')
-    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-        print(t_probs)
+    # with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        # print(t_probs)
